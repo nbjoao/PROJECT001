@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:12
-    container_name: app_postgres
+    image: postgres:15
+    container_name: lead-db
     environment:
       POSTGRES_USER: byteforge
       POSTGRES_PASSWORD: 2456B-MA96j
@@ -13,6 +13,17 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always
+  java-app:
+    image: lead-app
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/byteforge_db
+      SPRING_DATASOURCE_USERNAME: byteforge
+      SPRING_DATASOURCE_PASSWORD: 2456B-MA96j
 
 volumes:
   postgres_data:
