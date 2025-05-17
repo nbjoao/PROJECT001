@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:12
+    container_name: app_postgres
+    environment:
+      POSTGRES_USER: byteforge
+      POSTGRES_PASSWORD: 2456B-MA96j
+      POSTGRES_DB: byteforge_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  postgres_data:
