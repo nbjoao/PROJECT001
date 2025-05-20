@@ -6,10 +6,13 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import dev.byte_forge.project001.validation.StrongPassword;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.Id;
 
 @Entity
@@ -22,8 +25,11 @@ public class User {
     private UUID id;
 
     @Column(nullable = false, unique = true, name = "email")
+    @Email
+    @NotBlank
     private String email;
 
+    @StrongPassword
     @Column(nullable = false, name = "password")
     private String password;
 
