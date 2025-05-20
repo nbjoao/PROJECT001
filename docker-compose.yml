@@ -20,10 +20,20 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
+      - rabbitmq
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/byteforge_db
       SPRING_DATASOURCE_USERNAME: byteforge
       SPRING_DATASOURCE_PASSWORD: 2456B-MA96j
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
 
 volumes:
   postgres_data:
