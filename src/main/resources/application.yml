@@ -26,3 +26,15 @@ spring:
     queue: user-verification-queue
     exchange: user-verification-exchange
     routing-key: user.verification
+
+  mail:
+    host: mailhog
+    port: 1025
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false

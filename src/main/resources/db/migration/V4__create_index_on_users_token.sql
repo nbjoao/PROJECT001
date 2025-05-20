@@ -1,0 +1,1 @@
+CREATE INDEX idx_verification_token ON users(verification_token);

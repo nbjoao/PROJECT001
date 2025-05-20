@@ -17,8 +17,6 @@ public class UserEventPublisher {
     }
 
     public void sendVerificationMessage(String email) {
-        System.out.println(properties.getExchange());
-        System.out.println(properties.getRoutingKey());
         rabbitTemplate.convertAndSend(properties.getExchange(), properties.getRoutingKey(), email); 
     }
 
