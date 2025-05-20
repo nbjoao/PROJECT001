@@ -12,18 +12,25 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserEventPublisher eventPublisher;
 
     public UserMapper map = new UserMapper();
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            UserEventPublisher eventPublisher
+        ) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.eventPublisher = eventPublisher;
     }
 
-    public User createUser(UserCreateRequestDTO createRequestDTO) {
+    public void createUser(UserCreateRequestDTO createRequestDTO) {
         if (getByEmail(createRequestDTO.getEmail()).isEmpty()) {
             createRequestDTO.setPassword(passwordEncoder.encode(createRequestDTO.getPassword()));
-            return userRepository.save(map.toEntity(createRequestDTO));
+            userRepository.save(map.toEntity(createRequestDTO));
+            this.eventPublisher.sendVerificationMessage(createRequestDTO.getEmail());
         } else {
             throw new EmailAlreadyRegisteredException("Email already registered.");
         }
