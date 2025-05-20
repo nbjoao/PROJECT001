@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     public Optional<User> getByEmail(String email);
 
+    public Optional<User> getByVerificationTokenAndIsVerifiedIsFalse(String verificationToken);
+
 }

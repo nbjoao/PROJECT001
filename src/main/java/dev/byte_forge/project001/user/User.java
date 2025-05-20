@@ -35,6 +35,9 @@ public class User {
 
     @Column(name = "is_verified")
     private boolean isVerified = false;
+
+    @Column(name = "verification_token")
+    private String verificationToken;
     
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
@@ -64,5 +67,18 @@ public class User {
     public boolean isVerified() {
         return isVerified;
     }
+
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public void setVerified(boolean isVerified) {
+        this.isVerified = isVerified;
+    }
+
 
 }

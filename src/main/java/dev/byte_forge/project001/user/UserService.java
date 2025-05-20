@@ -2,6 +2,7 @@ package dev.byte_forge.project001.user;
 
 import java.util.Optional;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,17 @@ public class UserService {
 
     public Optional<User> getByEmail(String email) {
         return userRepository.getByEmail(email);
+    }
+
+    public Optional<User> getByVerificationCodeNotVerified(String verificationToken) {
+        return userRepository.getByVerificationTokenAndIsVerifiedIsFalse(verificationToken);
+    }
+
+    public void verifyUser(String token) throws BadRequestException {
+        User user = this.userRepository.getByVerificationTokenAndIsVerifiedIsFalse(token)
+                        .orElseThrow(() -> new BadRequestException());
+        user.setVerified(true);
+        userRepository.save(user);
     }
 
 }
